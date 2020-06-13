@@ -1,0 +1,37 @@
+<style>
+    body {
+        background-color: aquamarine;
+        margin: 0px;
+    }
+
+    textarea {
+        width: 50%vh;
+        height: 80px;
+        padding: 12px 20px;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+    }
+
+    input {
+        width: 30%vh;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+        border: 2px solid #ccc;
+        border-radius: 4px;
+        background-color: #f8f8f8;
+        font-size: 16px;
+        resize: none;
+    }
+</style>
+<form action="/sendForm" method="POST">
+    <p>Titulo: </p>
+    <input type="text" name="titulo">
+    <p>Conteúdo: </p>
+    <textarea name="conteudo"></textarea><br>
+    <button type="submit">Cadastrar Postangem</button>
+</form>

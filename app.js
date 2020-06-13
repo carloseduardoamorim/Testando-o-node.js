@@ -1,22 +1,55 @@
-const express = require("express");
+const express = require('express');
 const app = express();
+const handlebars = require('express-handlebars');
+const bodyParser = require('body-parser');
+const Post = require('./models/Postagem');
+//Config
+    //Templete Engine
+    app.engine('handlebars', handlebars({defaultLayout:'main'}));
+    app.set('view engine', 'handlebars');
 
-app.get("/",function(req,res){
-    res.sendFile(__dirname + "/scr/index.html")
-});
+    //Body Parser
+    app.use(bodyParser.urlencoded({extended: false}));
+    app.use(bodyParser.json());
 
-app.get("/sobre", function(req,res){
-    res.sendFile(__dirname + "/scr/sobre.html");
-});
+//Rotas
+    app.get('/', function(req, res){
+        Post.findAll({order: [['id', 'DESC']]}).then(function(posts){
+            res.render('home',{posts: posts})
+        })
+    })
+    app.get('/cadastro', function(req, res){
+        res.render('formulario')
+    })
+    app.post('/sendForm', function(req, res){
+        Post.create({
+            titulo: req.body.titulo,
+            conteudo: req.body.conteudo
+        }).then(function(){
+            res.redirect('/')
+        }).catch(function(erro){
+            res.send("Houve um erro: "+erro);
+        });
+        //res.send("Titulo: "+req.body.titulo+" Conteúdo: "+req.body.conteudo);
+    })
 
-app.get("/blog", function(rew, res){
-    res.send("Bem Vindo ao blog!");
-});
+    app.get('/delete/:id', function(req, res){
+        Post.destroy({
+            where: {
+                'id': req.params.id
+            }
+        }).then(function(){
+            res.redirect('/')
+            //res.send("Post apagado com sucesso!!!");
+        }).catch(function(erro){
+            res.send("Ocorreu algum erro: "+erro);
+        })
+    })
+    
 
-app.get("/ola/:nome/:cargo/:cor",function(req, res){
-    res.send("<h1>Ola: "+req.params.nome+"</h1>"+"<h2>Seu cargo e: "+req.params.cargo+"</h2>"+"<h2>Sua cor favorita e: "+req.params.cor+"</h2");
+//ligando o servidor http
+app.listen(3344, function(req, res){
+    console.log("O servidor rodando em http://localhost:3344");
 })
 
-app.listen(3344, function(req, res){
-    console.log("Servidor rodando na url http://localhost:3344");
-});
+
