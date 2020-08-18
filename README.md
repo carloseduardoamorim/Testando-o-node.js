@@ -1,7 +1,3 @@
-# Testando-o-node.js
-
-estudando node.js
-
 ## Realizado por Carlos Eduardo Amorim 
 
 # Aplicação utilizando as tecnologias:
