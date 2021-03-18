@@ -8,4 +8,3 @@
 - Models: Sequelize
 - Templete Engine: handlebars
 
-Sim é uma coisa bem simples... Mas na quelas né. Progresso Sempre!
